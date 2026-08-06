@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: department-service
+
+server:
+  port: 9001
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://service-registry:8761/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+  endpoint:
+    health:
+      show-details: always
