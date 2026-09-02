@@ -1,0 +1,39 @@
+name: User Service CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+  workflow_dispatch:
+    inputs:
+      image_tag:
+        description: "Docker image tag to deploy"
+        required: false
+        default: ""
+        type: string
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+
+  cicd:
+
+    uses: abj-developer/deployment-config/.github/workflows/reusable-service-cicd.yaml@main
+
+    with:
+      service_name: department-service
+      deploy_env: dev
+      mysql_database: departmentdb_test
+      image_tag: ${{ inputs.image_tag }}
+
+    secrets:
+      ORACLE_HOST: ${{ secrets.ORACLE_HOST }}
+      ORACLE_USERNAME: ${{ secrets.ORACLE_USERNAME }}
+      ORACLE_SSH_KEY: ${{ secrets.ORACLE_SSH_KEY }}
